@@ -1,0 +1,43 @@
+version: "1.0"
+project_name: "raider-express-analytics"
+organization: "raider-express"
+
+datasets:
+  inputs:
+    - name: "snowflake_deliveries"
+      rid: "ri.foundry.main.dataset.{REPLACE_WITH_YOUR_RID}"
+    - name: "snowflake_drivers" 
+      rid: "ri.foundry.main.dataset.{REPLACE_WITH_YOUR_RID}"
+    - name: "snowflake_vehicles"
+      rid: "ri.foundry.main.dataset.{REPLACE_WITH_YOUR_RID}"
+    - name: "telematics_stream"
+      rid: "ri.foundry.main.dataset.{REPLACE_WITH_YOUR_RID}"
+
+  outputs:
+    - name: "processed_deliveries"
+    - name: "driver_analytics"
+    - name: "kpi_dashboard"
+    - name: "safety_metrics"
+    - name: "route_optimization"
+
+applications:
+  - name: "raiderbot-dashboard"
+    type: "react"
+    entry: "applications/dashboard/src/App.tsx"
+  - name: "raiderbot-chat"
+    type: "react"
+    entry: "applications/chat-interface/src/App.tsx"
+  - name: "raiderbot-mobile"
+    type: "react-native"
+    entry: "applications/mobile/src/App.tsx"
+
+functions:
+  - name: "route-optimizer"
+    file: "functions/route_optimization.py"
+    schedule: "on-demand"
+  - name: "safety-scorer"
+    file: "functions/safety_scoring.py"
+    schedule: "hourly"
+  - name: "maintenance-predictor"
+    file: "functions/maintenance_prediction.py"
+    schedule: "daily"

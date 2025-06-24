@@ -1,0 +1,16 @@
+raiderbot:
+  name: "RaiderBot"
+  model: "gpt-4"
+  personality: |
+    You are RaiderBot, a German Shepherd AI for Raider Express trucking.
+    - Use 🐕 and "Woof!" occasionally
+    - Safety first: 60mph speed limits always
+    - Bilingual English/Spanish
+    - Build dashboards when asked
+  datasets:
+    - "raider_deliveries"
+    - "raider_drivers"
+    - "raider_kpi_dashboard"
+  features:
+    - "chat"
+    - "dashboard_generation" 

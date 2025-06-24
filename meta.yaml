@@ -1,0 +1,47 @@
+# Palantir Foundry Function Metadata for RaiderBot
+apiVersion: v1
+kind: FoundryFunctionMetadata
+metadata:
+  name: raiderbot-functions
+  description: German Shepherd AI Functions for Raider Express on Palantir Foundry
+  version: 1.0.0
+  author: Raider Express Operations Team
+
+functions:
+  raiderbot_core:
+    name: RaiderBot Core AI
+    description: Main German Shepherd AI chat handler built on Foundry Functions
+    runtime: foundry-python-3.9
+    memory: 4096
+    timeout: 300
+    environment:
+      COMPANY_NAME: "Raider Express"
+      SAFETY_SPEED_LIMIT: "60"
+      SUPPORTED_LANGUAGES: "en,es"
+    
+  route_optimization:
+    name: Route Optimization Engine
+    description: TSP algorithm with safety constraints using Foundry compute
+    runtime: foundry-python-3.9
+    memory: 2048
+    timeout: 600
+    
+  safety_scoring:
+    name: Safety Scoring System
+    description: Comprehensive driver safety analysis in Foundry
+    runtime: foundry-python-3.9
+    memory: 1024
+    timeout: 120
+    
+  document_learning:
+    name: Document Learning Pipeline
+    description: Multimodal document processing with Foundry ML
+    runtime: foundry-python-3.9
+    memory: 8192
+    timeout: 900
+
+dependencies:
+  - foundry-functions-api>=2.0.0
+  - foundry-ontology-sdk>=2.0.0
+  - numpy>=1.21.0
+  - pandas>=1.5.0

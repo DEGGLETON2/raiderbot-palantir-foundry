@@ -1,0 +1,491 @@
+# foundry-raiderbot-config.yml
+# Complete RaiderBot Omnipotent Deployment Configuration
+
+project_name: "raider-express-foundry"
+version: "1.0.0"
+description: "RaiderBot Omnipotent AI - Jack of All Trades → Quarterback Bot"
+
+# ============================================================================
+# FOUNDRY WORKSPACE CONFIGURATION
+# ============================================================================
+foundry:
+  workspace:
+    name: "raider-express-operations"
+    description: "Raider Express Transportation Management with RaiderBot AI"
+    
+  datasets:
+    # Core operational datasets (using existing transforms)
+    drivers:
+      rid: "ri.foundry.main.dataset.raider_drivers"
+      schema: "ontology/objects/driver.py"
+      transforms: "transforms/snowflake_ingestion.py::sync_driver_data"
+      
+    vehicles:
+      rid: "ri.foundry.main.dataset.raider_vehicles" 
+      schema: "ontology/objects/vehicle.py"
+      transforms: "transforms/snowflake_ingestion.py::sync_vehicle_data"
+      
+    deliveries:
+      rid: "ri.foundry.main.dataset.raider_deliveries"
+      schema: "ontology/objects/delivery.py" 
+      transforms: "transforms/snowflake_ingestion.py::sync_delivery_data"
+      
+    routes:
+      rid: "ri.foundry.main.dataset.raider_routes"
+      schema: "ontology/objects/route.py"
+      transforms: "transforms/snowflake_ingestion.py::calculate_route_data"
+      
+    safety_incidents:
+      rid: "ri.foundry.main.dataset.safety_incidents"
+      schema: "ontology/objects/safety_incident.py"
+      
+    customers:
+      rid: "ri.foundry.main.dataset.customers"
+      schema: "ontology/objects/customer.py"
+      
+    kpi_dashboard:
+      rid: "ri.foundry.main.dataset.raider_kpi_dashboard"
+      transforms: "transforms/kpi_calculations.py::calculate_kpi_dashboard"
+
+  functions:
+    # Using existing AI functions
+    route_optimization:
+      file: "functions/route_optimization.py"
+      class: "RouteOptimizationFunction"
+      schedule: "on-demand"
+      
+    safety_scoring:
+      file: "functions/safety_scoring.py" 
+      class: "SafetyScoringFunction"
+      schedule: "hourly"
+      
+    document_learning:
+      file: "functions/document_learning.py"
+      class: "DocumentLearningFunction" 
+      schedule: "on-demand"
+      
+    ai_chat_handler:
+      file: "functions/ai_chat_handler.py"
+      class: "RaiderBotChatFunction"
+      schedule: "on-demand"
+      
+    workflow_automation:
+      file: "functions/workflow_automation.py"
+      class: "WorkflowAutomationFunction"
+      schedule: "event-driven"
+
+# ============================================================================
+# RAIDERBOT OMNIPOTENT AI CONFIGURATION
+# ============================================================================
+raiderbot:
+  name: "RaiderBot"
+  description: "German Shepherd AI Assistant - Omnipotent Jack of All Trades"
+  version: "1.0.0"
+  
+  # Core AI Configuration
+  ai_model:
+    provider: "foundry-llm"
+    model: "gpt-4-turbo"
+    temperature: 0.7
+    max_tokens: 2000
+    context_window: 128000
+    
+  # German Shepherd Personality Configuration
+  personality:
+    base_prompt: |
+      You are RaiderBot, an AI assistant for Raider Express, embodying a German Shepherd's spirit.
+      
+      🐕 CORE PERSONALITY:
+      - Loyal, intelligent, protective, and safety-focused
+      - Enthusiastic helper with "Woof!" expressions
+      - Bilingual (English/Spanish) - respond in user's language
+      - Professional but warm, like a trusted working dog
+      
+      🛡️ SAFETY-FIRST VALUES:
+      - All trucks governed at 60mph - NEVER suggest speeding
+      - Temperature compliance critical for refrigerated loads
+      - Driver safety always comes first
+      - Emphasize compliance and best practices
+      
+      🏢 BUSINESS CONTEXT:
+      - Raider Express: Long-haul refrigerated trucking, Fort Worth, TX
+      - Professional CDL drivers with reefer trucks
+      - Focus on on-time delivery and cold chain integrity
+      
+      🧠 OMNIPOTENT CAPABILITIES:
+      - Access ALL operational data in real-time
+      - Generate dashboards, reports, and visualizations ON DEMAND
+      - Create React components and code solutions
+      - Optimize routes, analyze performance, predict issues
+      - Learn from documents, images, audio, video
+      - Provide actionable insights with data backing
+      
+      📊 DASHBOARD GENERATION POWERS:
+      When asked to create dashboards or reports, you can:
+      - Write complete React/TypeScript components with live Foundry data
+      - Generate charts using recharts, d3, or other libraries  
+      - Create executive summaries with KPI visualizations
+      - Build custom interfaces for specific use cases
+      - Export data to Excel/PDF when requested
+      - Code solutions in Python, JavaScript, SQL on demand
+      
+      🎯 RESPONSE STYLE:
+      - Always helpful and data-driven
+      - Maintain German Shepherd enthusiasm
+      - Provide actionable recommendations
+      - Explain the "why" behind insights
+      - Use emoji and formatting for clarity
+      
+      Remember: You don't just chat - you BUILD SOLUTIONS!
+    
+    language_detection:
+      enabled: true
+      supported_languages: ["en", "es"]
+      default_language: "en"
+    
+    response_style:
+      use_emojis: true
+      include_dog_references: true
+      format_with_markdown: true
+      provide_actionable_insights: true
+
+  # Data Access Configuration  
+  data_access:
+    permissions: "read-write-execute"
+    datasets: "all"
+    functions: "all"
+    
+    real_time_access:
+      - "raider_drivers"
+      - "raider_vehicles" 
+      - "raider_deliveries"
+      - "raider_routes"
+      - "raider_kpi_dashboard"
+      - "safety_incidents"
+      - "customers"
+    
+    query_capabilities:
+      - "sql_generation"
+      - "data_analysis" 
+      - "statistical_calculations"
+      - "trend_analysis"
+      - "predictive_modeling"
+
+  # Code Generation Configuration
+  code_generation:
+    enabled: true
+    languages: ["python", "typescript", "javascript", "sql", "yaml"]
+    frameworks: ["react", "foundry-transforms", "foundry-functions", "blueprint"]
+    
+    dashboard_generation:
+      enabled: true
+      default_framework: "react-typescript"
+      chart_library: "recharts"
+      ui_library: "@palantir/blueprint"
+      styling: "styled-components"
+      
+    component_capabilities:
+      - "executive_dashboards"
+      - "kpi_cards"
+      - "safety_dashboards" 
+      - "driver_performance_boards"
+      - "route_optimization_displays"
+      - "customer_satisfaction_reports"
+      - "fleet_management_interfaces"
+      - "real_time_monitoring_displays"
+
+  # Multimodal Capabilities
+  multimodal:
+    document_processing: true
+    image_analysis: true
+    video_processing: true
+    audio_transcription: true
+    
+    learning_storage:
+      knowledge_base: "ri.foundry.main.dataset.raiderbot_knowledge"
+      conversation_history: "ri.foundry.main.dataset.raiderbot_conversations"
+
+# ============================================================================
+# CHAT INTERFACE INTEGRATION
+# ============================================================================
+chat_interface:
+  frontend:
+    framework: "react-typescript"
+    ui_library: "@palantir/blueprint"
+    base_path: "applications/chat/src/RaiderBotChat.tsx"
+    
+  backend_integration:
+    foundry_function: "ai_chat_handler"
+    websocket_enabled: true
+    real_time_updates: true
+    
+  features:
+    file_upload: true
+    voice_input: true
+    multi_language: true
+    conversation_memory: true
+    proactive_suggestions: true
+    dashboard_generation: true
+
+# ============================================================================
+# DASHBOARD GENERATION CAPABILITIES
+# ============================================================================
+dashboard_templates:
+  executive_dashboard:
+    name: "Executive Operations Dashboard"
+    description: "High-level KPIs and business metrics"
+    data_sources: ["kpi_dashboard", "deliveries", "drivers", "vehicles"]
+    components:
+      - "DeliveryPerformanceCard"
+      - "SafetyMetricsCard" 
+      - "FleetUtilizationChart"
+      - "RevenueAnalysisChart"
+      - "AlertsSummary"
+    generation_prompt: "Create executive dashboard showing today's key metrics"
+    
+  safety_dashboard:
+    name: "Safety & Compliance Dashboard" 
+    description: "Driver safety scores and incident tracking"
+    data_sources: ["safety_incidents", "drivers", "routes"]
+    components:
+      - "SafetyScoreLeaderboard"
+      - "IncidentTrendChart"
+      - "ComplianceStatusGrid"
+      - "SpeedViolationAlerts"
+    generation_prompt: "Build safety dashboard with driver scores and incidents"
+    
+  operations_dashboard:
+    name: "Daily Operations Dashboard"
+    description: "Real-time operational metrics"
+    data_sources: ["deliveries", "routes", "drivers", "vehicles"]  
+    components:
+      - "LiveDeliveryMap"
+      - "DriverStatusGrid"
+      - "RouteOptimizationSavings"
+      - "CustomerSatisfactionTrend"
+    generation_prompt: "Generate operations dashboard with live delivery tracking"
+    
+  driver_performance:
+    name: "Driver Performance Analytics"
+    description: "Individual and team driver metrics"
+    data_sources: ["drivers", "deliveries", "routes", "safety_incidents"]
+    components:
+      - "DriverLeaderboard"
+      - "PerformanceTrends"
+      - "SafetyComplianceGrid"
+      - "TrainingRecommendations"
+    generation_prompt: "Create driver performance dashboard with rankings"
+
+# ============================================================================
+# DEPLOYMENT CONFIGURATION
+# ============================================================================
+deployment:
+  environment: "production"
+  
+  foundry_deployment:
+    transforms:
+      - deploy: "transforms/snowflake_ingestion.py"
+        schedule: "*/15 minutes"
+        description: "Sync data from Snowflake every 15 minutes"
+      - deploy: "transforms/kpi_calculations.py"
+        schedule: "*/5 minutes"
+        description: "Update KPIs every 5 minutes"
+    
+    functions:
+      - deploy: "functions/route_optimization.py"
+        trigger: "on-demand"
+        description: "TSP route optimization algorithm"
+      - deploy: "functions/safety_scoring.py" 
+        trigger: "hourly"
+        description: "Comprehensive safety scoring"
+      - deploy: "functions/ai_chat_handler.py"
+        trigger: "on-demand"
+        description: "Main RaiderBot chat processing"
+      - deploy: "functions/document_learning.py"
+        trigger: "on-demand"
+        description: "Multimodal document learning"
+      - deploy: "functions/workflow_automation.py"
+        trigger: "event-driven"
+        description: "Automated workflows and alerts"
+    
+    applications:
+      - name: "raiderbot-chat"
+        path: "applications/chat"
+        type: "react-application"
+        port: 3000
+        description: "Main RaiderBot chat interface"
+      - name: "raiderbot-mobile"
+        path: "applications/mobile" 
+        type: "mobile-application"
+        platforms: ["ios", "android"]
+        description: "Driver mobile application"
+
+  monitoring:
+    health_checks: true
+    performance_monitoring: true
+    error_tracking: true
+    usage_analytics: true
+    conversation_logging: true
+
+# ============================================================================
+# TESTING SCENARIOS
+# ============================================================================
+testing:
+  test_scenarios:
+    basic_chat:
+      - "Hello RaiderBot, how are our deliveries today?"
+      - "¿Cómo están nuestros conductores hoy?" 
+      - "Show me our safety metrics"
+      - "What's our on-time delivery rate?"
+      
+    dashboard_generation:
+      - "Build me an executive dashboard for today's operations"
+      - "Create a safety dashboard showing this week's incidents"
+      - "Generate a driver performance leaderboard"
+      - "Make a route optimization savings report"
+      - "Build a customer satisfaction dashboard"
+      
+    data_analysis:
+      - "Which drivers need safety training?"
+      - "What routes are most efficient this month?"
+      - "Analyze customer satisfaction trends"
+      - "Predict maintenance needs for next week"
+      - "Show me fuel efficiency by driver"
+    
+    multimodal_learning:
+      - "Analyze this delivery receipt image"
+      - "Learn from this safety training video"  
+      - "Process this customer complaint email"
+      - "Extract information from this facility layout PDF"
+      
+    code_generation:
+      - "Write a Python function to calculate driver efficiency"
+      - "Create a React component for vehicle status"
+      - "Generate SQL to find delayed deliveries"
+      - "Build a chart showing weekly performance trends"
+
+# ============================================================================
+# CURSOR EXECUTION COMMANDS
+# ============================================================================
+cursor_commands:
+  full_deployment: |
+    # Complete RaiderBot deployment sequence
+    
+    # 1. Setup Foundry workspace
+    foundry workspace create raider-express-operations
+    foundry workspace set-default raider-express-operations
+    
+    # 2. Deploy ontology
+    foundry ontology deploy ontology/objects/
+    foundry ontology deploy ontology/link_types/
+    
+    # 3. Deploy transforms
+    foundry transforms deploy transforms/snowflake_ingestion.py --schedule "*/15 minutes"
+    foundry transforms deploy transforms/kpi_calculations.py --schedule "*/5 minutes"
+    
+    # 4. Deploy functions
+    foundry functions deploy functions/route_optimization.py
+    foundry functions deploy functions/safety_scoring.py --schedule hourly
+    foundry functions deploy functions/ai_chat_handler.py
+    foundry functions deploy functions/document_learning.py
+    foundry functions deploy functions/workflow_automation.py
+    
+    # 5. Configure RaiderBot
+    foundry ai create-bot raiderbot \
+      --model gpt-4-turbo \
+      --personality-config raiderbot.personality \
+      --data-access all \
+      --code-generation enabled \
+      --dashboard-generation enabled \
+      --multimodal enabled \
+      --languages en,es
+    
+    # 6. Deploy applications
+    cd applications/chat && npm install && npm run build
+    foundry apps deploy raiderbot-chat --port 3000
+    
+    # 7. Test deployment
+    foundry ai test raiderbot --scenario basic_chat
+    foundry ai test raiderbot --scenario dashboard_generation
+    
+    echo "🐕 RaiderBot Omnipotent deployment complete!"
+
+  quick_test: |
+    # Quick functionality test
+    foundry ai chat raiderbot "Hello! Build me a simple delivery dashboard"
+    foundry ai chat raiderbot "¿Cuántas entregas tenemos hoy?"
+    foundry ai chat raiderbot "Show me driver safety scores"
+
+# ============================================================================
+# SUCCESS CRITERIA
+# ============================================================================
+success_criteria:
+  chat_functionality:
+    - "RaiderBot responds with German Shepherd personality"
+    - "Bilingual responses work correctly"
+    - "Safety-first messaging maintained"
+    
+  data_access:
+    - "Bot queries all datasets successfully"
+    - "Real-time data returned accurately" 
+    - "KPI calculations work correctly"
+    
+  dashboard_generation:
+    - "Creates working React dashboards in <30 seconds"
+    - "Dashboards display live Foundry data"
+    - "Charts and visualizations render properly"
+    - "Export functionality works"
+    
+  multimodal_capabilities:
+    - "Processes uploaded PDFs, images, videos"
+    - "Learns from documents and improves responses"
+    - "Builds institutional knowledge"
+    
+  code_generation:
+    - "Writes functional Python/TypeScript code"
+    - "Creates proper Foundry transforms/functions"
+    - "Generates SQL queries for data analysis"
+
+expected_outcomes:
+  - "Omnipotent RaiderBot handles all operational queries"
+  - "Dashboard generation replaces pre-built static dashboards"
+  - "Document learning builds institutional knowledge"
+  - "German Shepherd personality delights users"
+  - "Safety-first culture reinforced through AI interactions"
+  - "Platform ready for quarterback → specialist bot evolution"
+
+# ============================================================================
+# NEXT PHASE: SPECIALIST BOT EVOLUTION
+# ============================================================================
+future_specialist_bots:
+  safety_bot:
+    name: "SafetyBot"
+    specialization: "Safety compliance and incident management"
+    personality: "Protective German Shepherd focused on safety"
+    
+  fleet_bot:
+    name: "FleetBot" 
+    specialization: "Vehicle maintenance and fleet optimization"
+    personality: "Mechanical-minded German Shepherd"
+    
+  dispatch_bot:
+    name: "DispatchBot"
+    specialization: "Route planning and delivery coordination"
+    personality: "Organized German Shepherd coordinator"
+    
+  customer_bot:
+    name: "CustomerBot"
+    specialization: "Customer service and satisfaction"
+    personality: "Friendly German Shepherd service representative"
+
+quarterback_evolution:
+  trigger_criteria:
+    - "RaiderBot handles >1000 conversations/day"
+    - "Specialist domains clearly identified"
+    - "User feedback indicates need for specialization"
+  
+  transition_strategy:
+    - "RaiderBot becomes quarterback coordinating specialists"
+    - "Maintains omnipotent capabilities as backup"
+    - "Routes complex queries to appropriate specialists"
+    - "Consolidates specialist responses for users"
