@@ -1,0 +1,713 @@
+# RaiderBot Palantir Foundry Complete Schema Documentation
+# Updated with MCLEOD_DB.dbo naming convention
+
+metadata:
+  version: "2.0"
+  last_updated: "2024-01-24"
+  database_migration: "Updated to MCLEOD_DB with dbo schema"
+  platform: "Palantir Foundry"
+
+# Snowflake Source Database Configuration
+snowflake_config:
+  database: "MCLEOD_DB"
+  schema: "dbo"
+  warehouse: "RAIDER_EXPRESS_WH"
+  connection_details:
+    foundry_connector: "foundry-snowflake-connector"
+    sync_frequency: "*/15 minutes"
+
+# Palantir Foundry Ontology Objects
+ontology_objects:
+  
+  # 1. Driver Object
+  Driver:
+    api_name: "Driver"
+    display_name: "Raider Express Driver"
+    description: "Driver data model in Palantir Foundry ontology"
+    snowflake_source_table: "MCLEOD_DB.dbo.drivers"
+    foundry_dataset: "ri.foundry.main.dataset.raider_drivers"
+    properties:
+      driver_id:
+        type: "string"
+        required: true
+        description: "Unique driver identifier"
+        snowflake_column: "driver_id"
+      
+      first_name:
+        type: "string"
+        required: true
+        snowflake_column: "first_name"
+      
+      last_name:
+        type: "string"
+        required: true
+        snowflake_column: "last_name"
+      
+      safety_score:
+        type: "double"
+        description: "Safety score calculated by Foundry functions"
+        snowflake_column: "safety_score"
+        calculated: true
+      
+      speed_compliance_60mph:
+        type: "double"
+        description: "Percentage compliance with 60mph limit"
+        snowflake_column: "speed_compliance_rate"
+        calculated: true
+      
+      status:
+        type: "string"
+        required: true
+        snowflake_column: "status"
+        allowed_values: ["active", "inactive", "terminated", "on_leave"]
+      
+      hire_date:
+        type: "date"
+        required: true
+        snowflake_column: "hire_date"
+      
+      cdl_number:
+        type: "string"
+        required: true
+        snowflake_column: "cdl_number"
+      
+      cdl_expiration:
+        type: "date"
+        required: true
+        snowflake_column: "cdl_expiration"
+      
+      foundry_last_updated:
+        type: "timestamp"
+        description: "Last update timestamp in Foundry datasets"
+        generated: true
+  
+  # 2. Vehicle Object
+  Vehicle:
+    api_name: "Vehicle"
+    display_name: "Raider Express Vehicle"
+    description: "Vehicle data model with 60mph governance in Palantir Foundry"
+    snowflake_source_table: "MCLEOD_DB.dbo.vehicles"
+    foundry_dataset: "ri.foundry.main.dataset.raider_vehicles"
+    properties:
+      vehicle_id:
+        type: "string"
+        required: true
+        description: "Unique vehicle identifier"
+        snowflake_column: "vehicle_id"
+      
+      vin:
+        type: "string"
+        required: true
+        description: "Vehicle Identification Number"
+        snowflake_column: "vin"
+      
+      make:
+        type: "string"
+        required: true
+        snowflake_column: "make"
+      
+      model:
+        type: "string"
+        required: true
+        snowflake_column: "model"
+      
+      year:
+        type: "integer"
+        required: true
+        snowflake_column: "year"
+      
+      speed_governor_active:
+        type: "boolean"
+        required: true
+        default: true
+        description: "60mph speed limiter status - MUST be true"
+        snowflake_column: "speed_governor_active"
+      
+      max_speed_setting:
+        type: "integer"
+        required: true
+        default: 60
+        description: "Maximum speed in mph - governed at 60"
+        snowflake_column: "max_speed_setting"
+      
+      maintenance_score:
+        type: "double"
+        description: "Overall maintenance health score (0-100)"
+        snowflake_column: "maintenance_score"
+      
+      last_maintenance_date:
+        type: "date"
+        snowflake_column: "last_maintenance_date"
+      
+      next_maintenance_due:
+        type: "date"
+        snowflake_column: "next_maintenance_due"
+      
+      foundry_last_updated:
+        type: "timestamp"
+        generated: true
+  
+  # 3. Delivery Object
+  Delivery:
+    api_name: "Delivery"
+    display_name: "Raider Express Delivery"
+    description: "Delivery tracking with temperature compliance in Foundry"
+    snowflake_source_table: "MCLEOD_DB.dbo.deliveries"
+    foundry_dataset: "ri.foundry.main.dataset.raider_deliveries"
+    properties:
+      delivery_id:
+        type: "string"
+        required: true
+        description: "Unique delivery identifier"
+        snowflake_column: "delivery_id"
+      
+      order_number:
+        type: "string"
+        required: true
+        snowflake_column: "order_number"
+      
+      customer_id:
+        type: "string"
+        required: true
+        snowflake_column: "customer_id"
+      
+      driver_id:
+        type: "string"
+        required: true
+        snowflake_column: "driver_id"
+      
+      vehicle_id:
+        type: "string"
+        required: true
+        snowflake_column: "vehicle_id"
+      
+      status:
+        type: "string"
+        required: true
+        snowflake_column: "status"
+        allowed_values: ["pending", "in_transit", "completed", "cancelled", "failed"]
+      
+      temperature_controlled:
+        type: "boolean"
+        description: "Requires temperature monitoring"
+        snowflake_column: "temperature_controlled"
+      
+      temperature_range:
+        type: "string"
+        description: "Required temperature range in Fahrenheit"
+        snowflake_column: "temperature_range"
+      
+      scheduled_delivery:
+        type: "timestamp"
+        required: true
+        snowflake_column: "scheduled_delivery_time"
+      
+      actual_delivery:
+        type: "timestamp"
+        snowflake_column: "actual_delivery_time"
+      
+      pickup_location:
+        type: "string"
+        required: true
+        snowflake_column: "pickup_location"
+      
+      delivery_location:
+        type: "string"
+        required: true
+        snowflake_column: "delivery_location"
+      
+      weight_pounds:
+        type: "double"
+        snowflake_column: "weight_lbs"
+      
+      foundry_dataset_source:
+        type: "string"
+        default: "raider_deliveries"
+        generated: true
+  
+  # 4. Route Object
+  Route:
+    api_name: "Route"
+    display_name: "Delivery Route"
+    description: "Optimized routes with safety constraints in Foundry"
+    snowflake_source_table: "MCLEOD_DB.dbo.routes"
+    foundry_dataset: "ri.foundry.main.dataset.raider_routes"
+    properties:
+      route_id:
+        type: "string"
+        required: true
+        description: "Unique route identifier"
+        snowflake_column: "route_id"
+      
+      driver_id:
+        type: "string"
+        required: true
+        snowflake_column: "driver_id"
+      
+      vehicle_id:
+        type: "string"
+        required: true
+        snowflake_column: "vehicle_id"
+      
+      route_date:
+        type: "date"
+        required: true
+        snowflake_column: "route_date"
+      
+      optimization_score:
+        type: "double"
+        description: "Efficiency score from Foundry optimization"
+        calculated: true
+      
+      total_distance:
+        type: "double"
+        description: "Total route distance in miles"
+        snowflake_column: "total_distance_miles"
+      
+      estimated_duration:
+        type: "integer"
+        description: "Estimated time in minutes (with 60mph limit)"
+        snowflake_column: "estimated_duration_minutes"
+      
+      stop_count:
+        type: "integer"
+        required: true
+        snowflake_column: "stop_count"
+      
+      foundry_optimized_at:
+        type: "timestamp"
+        description: "When route was optimized by Foundry Functions"
+        generated: true
+  
+  # 5. SafetyIncident Object
+  SafetyIncident:
+    api_name: "SafetyIncident"
+    display_name: "Safety Incident"
+    description: "Safety compliance and incident tracking in Foundry"
+    snowflake_source_table: "MCLEOD_DB.dbo.safety_incidents"
+    foundry_dataset: "ri.foundry.main.dataset.raider_safety_incidents"
+    properties:
+      incident_id:
+        type: "string"
+        required: true
+        description: "Unique incident identifier"
+        snowflake_column: "incident_id"
+      
+      driver_id:
+        type: "string"
+        snowflake_column: "driver_id"
+      
+      vehicle_id:
+        type: "string"
+        snowflake_column: "vehicle_id"
+      
+      incident_date:
+        type: "timestamp"
+        required: true
+        snowflake_column: "incident_date"
+      
+      severity_level:
+        type: "string"
+        required: true
+        snowflake_column: "severity_level"
+        allowed_values: ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+      
+      speed_related:
+        type: "boolean"
+        description: "Was speed a factor in this incident"
+        snowflake_column: "speed_related"
+      
+      recorded_speed:
+        type: "double"
+        description: "Vehicle speed at time of incident (mph)"
+        snowflake_column: "recorded_speed_mph"
+      
+      incident_type:
+        type: "string"
+        required: true
+        snowflake_column: "incident_type"
+        allowed_values: ["collision", "near_miss", "violation", "equipment_failure", "injury", "other"]
+      
+      description:
+        type: "string"
+        description: "Detailed description of the safety incident"
+        snowflake_column: "description"
+      
+      location:
+        type: "string"
+        snowflake_column: "location"
+      
+      preventable:
+        type: "boolean"
+        snowflake_column: "preventable"
+      
+      cost_estimate:
+        type: "double"
+        snowflake_column: "cost_estimate"
+      
+      foundry_analysis_complete:
+        type: "boolean"
+        default: false
+        description: "Has Foundry ML analyzed this incident"
+        generated: true
+  
+  # 6. Customer Object
+  Customer:
+    api_name: "Customer"
+    display_name: "Raider Express Customer"
+    description: "Customer relationship tracking in Foundry"
+    snowflake_source_table: "MCLEOD_DB.dbo.customers"
+    foundry_dataset: "ri.foundry.main.dataset.raider_customers"
+    properties:
+      customer_id:
+        type: "string"
+        required: true
+        description: "Unique customer identifier"
+        snowflake_column: "customer_id"
+      
+      company_name:
+        type: "string"
+        required: true
+        snowflake_column: "company_name"
+      
+      contact_name:
+        type: "string"
+        snowflake_column: "contact_name"
+      
+      contact_email:
+        type: "string"
+        snowflake_column: "contact_email"
+      
+      contact_phone:
+        type: "string"
+        snowflake_column: "contact_phone"
+      
+      address:
+        type: "string"
+        snowflake_column: "address"
+      
+      city:
+        type: "string"
+        snowflake_column: "city"
+      
+      state:
+        type: "string"
+        snowflake_column: "state"
+      
+      zip_code:
+        type: "string"
+        snowflake_column: "zip_code"
+      
+      preferred_delivery_window:
+        type: "string"
+        description: "Customer's preferred delivery times"
+        snowflake_column: "preferred_delivery_window"
+      
+      temperature_requirements:
+        type: "boolean"
+        description: "Requires temperature-controlled deliveries"
+        snowflake_column: "requires_temp_control"
+      
+      satisfaction_score:
+        type: "double"
+        description: "Overall satisfaction rating (0-100)"
+        snowflake_column: "satisfaction_score"
+        calculated: true
+      
+      lifetime_value:
+        type: "double"
+        description: "Total revenue from customer"
+        snowflake_column: "lifetime_value"
+      
+      customer_since:
+        type: "date"
+        snowflake_column: "customer_since"
+      
+      credit_limit:
+        type: "double"
+        snowflake_column: "credit_limit"
+      
+      payment_terms:
+        type: "string"
+        snowflake_column: "payment_terms"
+      
+      foundry_segment:
+        type: "string"
+        description: "Customer segment from Foundry analytics"
+        calculated: true
+
+# Palantir Foundry Ontology Relationships
+ontology_relationships:
+  
+  driver_operates_vehicle:
+    api_name: "driver_operates_vehicle"
+    display_name: "Driver Operates Vehicle"
+    description: "Links drivers to their assigned vehicles"
+    source_object: "Driver"
+    target_object: "Vehicle"
+    cardinality: "ONE_TO_MANY"
+    foreign_key: "driver_id"
+  
+  driver_completes_delivery:
+    api_name: "driver_completes_delivery"
+    display_name: "Driver Completes Delivery"
+    description: "Links drivers to their deliveries"
+    source_object: "Driver"
+    target_object: "Delivery"
+    cardinality: "ONE_TO_MANY"
+    foreign_key: "driver_id"
+  
+  vehicle_assigned_route:
+    api_name: "vehicle_assigned_route"
+    display_name: "Vehicle Assigned to Route"
+    description: "Links vehicles to their routes"
+    source_object: "Vehicle"
+    target_object: "Route"
+    cardinality: "ONE_TO_MANY"
+    foreign_key: "vehicle_id"
+  
+  route_contains_delivery:
+    api_name: "route_contains_delivery"
+    display_name: "Route Contains Delivery"
+    description: "Links routes to their deliveries"
+    source_object: "Route"
+    target_object: "Delivery"
+    cardinality: "ONE_TO_MANY"
+    join_table: "MCLEOD_DB.dbo.route_deliveries"
+  
+  customer_receives_delivery:
+    api_name: "customer_receives_delivery"
+    display_name: "Customer Receives Delivery"
+    description: "Links customers to their deliveries"
+    source_object: "Customer"
+    target_object: "Delivery"
+    cardinality: "ONE_TO_MANY"
+    foreign_key: "customer_id"
+  
+  driver_involved_incident:
+    api_name: "driver_involved_incident"
+    display_name: "Driver Involved in Incident"
+    description: "Links drivers to safety incidents"
+    source_object: "Driver"
+    target_object: "SafetyIncident"
+    cardinality: "ONE_TO_MANY"
+    foreign_key: "driver_id"
+  
+  vehicle_involved_incident:
+    api_name: "vehicle_involved_incident"
+    display_name: "Vehicle Involved in Incident"
+    description: "Links vehicles to safety incidents"
+    source_object: "Vehicle"
+    target_object: "SafetyIncident"
+    cardinality: "ONE_TO_MANY"
+    foreign_key: "vehicle_id"
+
+# Foundry Transform Definitions
+transforms:
+  
+  snowflake_ingestion:
+    name: "Snowflake Data Ingestion"
+    description: "Ingests data from MCLEOD_DB into Foundry datasets"
+    schedule: "*/15 * * * *"
+    source_connection: "snowflake_connector"
+    transforms:
+      - name: "sync_driver_data"
+        source: "MCLEOD_DB.dbo.drivers"
+        target: "raider_drivers"
+        type: "full_refresh"
+      
+      - name: "sync_vehicle_data"
+        source: "MCLEOD_DB.dbo.vehicles"
+        target: "raider_vehicles"
+        type: "full_refresh"
+        
+      - name: "sync_delivery_data"
+        source: "MCLEOD_DB.dbo.deliveries"
+        target: "raider_deliveries"
+        type: "incremental"
+        incremental_column: "last_modified"
+        
+      - name: "sync_route_data"
+        source: "MCLEOD_DB.dbo.routes"
+        target: "raider_routes"
+        type: "incremental"
+        incremental_column: "route_date"
+        
+      - name: "sync_incident_data"
+        source: "MCLEOD_DB.dbo.safety_incidents"
+        target: "raider_safety_incidents"
+        type: "full_refresh"
+        
+      - name: "sync_customer_data"
+        source: "MCLEOD_DB.dbo.customers"
+        target: "raider_customers"
+        type: "full_refresh"
+  
+  kpi_calculations:
+    name: "KPI Dashboard Calculations"
+    description: "Calculates real-time KPIs for RaiderBot dashboard"
+    schedule: "*/5 * * * *"
+    inputs:
+      - "raider_drivers"
+      - "raider_vehicles"
+      - "raider_deliveries"
+      - "raider_safety_incidents"
+    output: "raider_kpi_dashboard"
+    calculations:
+      - "total_drivers"
+      - "active_drivers"
+      - "avg_safety_score"
+      - "deliveries_today"
+      - "on_time_rate"
+      - "speed_compliance_rate"
+      - "incidents_last_30_days"
+
+# KPI Definitions
+kpi_definitions:
+  
+  safety_metrics:
+    avg_safety_score:
+      description: "Average safety score across active drivers"
+      formula: "AVG(driver.safety_score) WHERE driver.status = 'active'"
+      target: "> 85"
+      
+    speed_compliance_rate:
+      description: "Percentage of vehicles compliant with 60mph limit"
+      formula: "COUNT(vehicle WHERE max_speed_setting = 60) / COUNT(vehicle) * 100"
+      target: "100%"
+      critical: true
+      
+    incidents_per_million_miles:
+      description: "Safety incidents per million miles driven"
+      formula: "COUNT(safety_incidents) / SUM(route.total_distance) * 1000000"
+      target: "< 5"
+  
+  operational_metrics:
+    on_time_delivery_rate:
+      description: "Percentage of deliveries completed on time"
+      formula: "COUNT(delivery WHERE actual_delivery <= scheduled_delivery) / COUNT(delivery) * 100"
+      target: "> 95%"
+      
+    daily_delivery_volume:
+      description: "Number of deliveries completed today"
+      formula: "COUNT(delivery WHERE DATE(actual_delivery) = CURRENT_DATE)"
+      
+    fleet_utilization:
+      description: "Percentage of vehicles in active use"
+      formula: "COUNT(DISTINCT vehicle_id IN routes WHERE route_date = CURRENT_DATE) / COUNT(vehicle) * 100"
+      target: "> 80%"
+
+# Data Validation Rules
+data_validation:
+  
+  driver_validations:
+    - field: "cdl_expiration"
+      rule: "cdl_expiration > CURRENT_DATE"
+      error: "CDL expired"
+      severity: "CRITICAL"
+    
+    - field: "safety_score"
+      rule: "safety_score BETWEEN 0 AND 100"
+      error: "Invalid safety score"
+      
+  vehicle_validations:
+    - field: "speed_governor_active"
+      rule: "speed_governor_active = TRUE"
+      error: "Speed governor must be active"
+      severity: "CRITICAL"
+      
+    - field: "max_speed_setting"
+      rule: "max_speed_setting <= 60"
+      error: "Speed limit exceeds 60mph"
+      severity: "CRITICAL"
+  
+  delivery_validations:
+    - field: "temperature_range"
+      rule: "temperature_controlled = FALSE OR temperature_range IS NOT NULL"
+      error: "Temperature range required for controlled deliveries"
+
+# Snowflake Source Views
+snowflake_views:
+  
+  driver_safety_summary:
+    database: "MCLEOD_DB"
+    schema: "dbo"
+    definition: |
+      CREATE OR REPLACE VIEW MCLEOD_DB.dbo.v_driver_safety_summary AS
+      SELECT 
+        d.driver_id,
+        d.first_name,
+        d.last_name,
+        d.safety_score,
+        COUNT(si.incident_id) as incident_count,
+        SUM(CASE WHEN si.speed_related = TRUE THEN 1 ELSE 0 END) as speed_incidents,
+        MAX(si.incident_date) as last_incident_date
+      FROM MCLEOD_DB.dbo.drivers d
+      LEFT JOIN MCLEOD_DB.dbo.safety_incidents si ON d.driver_id = si.driver_id
+      GROUP BY d.driver_id, d.first_name, d.last_name, d.safety_score
+  
+  delivery_performance:
+    database: "MCLEOD_DB"
+    schema: "dbo"
+    definition: |
+      CREATE OR REPLACE VIEW MCLEOD_DB.dbo.v_delivery_performance AS
+      SELECT 
+        del.delivery_id,
+        del.customer_id,
+        c.company_name,
+        del.scheduled_delivery,
+        del.actual_delivery,
+        CASE 
+          WHEN del.actual_delivery <= del.scheduled_delivery THEN 'ON_TIME'
+          ELSE 'LATE'
+        END as delivery_status,
+        DATEDIFF(minute, del.scheduled_delivery, del.actual_delivery) as minutes_variance,
+        del.temperature_controlled,
+        r.total_distance as route_distance
+      FROM MCLEOD_DB.dbo.deliveries del
+      JOIN MCLEOD_DB.dbo.customers c ON del.customer_id = c.customer_id
+      LEFT JOIN MCLEOD_DB.dbo.route_deliveries rd ON del.delivery_id = rd.delivery_id
+      LEFT JOIN MCLEOD_DB.dbo.routes r ON rd.route_id = r.route_id
+
+# Migration Notes
+migration_notes:
+  database_change:
+    from: "Previous unnamed database"
+    to: "MCLEOD_DB"
+    reason: "New data ingestion platform implementation"
+    
+  schema_change:
+    from: "Various schemas"
+    to: "dbo"
+    reason: "Standardization with McLeod system"
+    
+  implementation_date: "2024-01-24"
+  
+  affected_components:
+    - "All Foundry transforms must update connection strings"
+    - "Snowflake sync jobs need reconfiguration"
+    - "SQL queries in functions require MCLEOD_DB.dbo prefix"
+    - "Views and stored procedures need recreation"
+
+# Example Updated Queries
+example_queries:
+  
+  get_active_drivers:
+    old: "SELECT * FROM drivers WHERE status = 'active'"
+    new: "SELECT * FROM MCLEOD_DB.dbo.drivers WHERE status = 'active'"
+    
+  safety_metrics:
+    old: "SELECT AVG(safety_score) FROM drivers"
+    new: "SELECT AVG(safety_score) FROM MCLEOD_DB.dbo.drivers"
+    
+  delivery_tracking:
+    old: |
+      SELECT d.*, c.company_name 
+      FROM deliveries d 
+      JOIN customers c ON d.customer_id = c.customer_id
+    new: |
+      SELECT d.*, c.company_name 
+      FROM MCLEOD_DB.dbo.deliveries d 
+      JOIN MCLEOD_DB.dbo.customers c ON d.customer_id = c.customer_id
+
+# End of Schema Documentation
