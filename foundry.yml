@@ -48,6 +48,8 @@ transforms:
     type: foundry_transform
     path: palantir-transforms/snowflake_ingestion.py
     schedule: "*/15 * * * *"
+    database: MCLEOD_DB
+    schema: dbo
     dependencies:
       - snowflake_connection
       

@@ -1,0 +1,33 @@
+{
+  "workspace": "raider-express-raiderbot",
+  "components": {
+    "ontology": {
+      "objects": [
+        "Driver",
+        "Vehicle",
+        "Delivery",
+        "Route",
+        "SafetyIncident",
+        "Customer"
+      ],
+      "path": "palantir-ontology/"
+    },
+    "functions": {
+      "functions": [
+        "raiderbot_core",
+        "route_optimization",
+        "safety_scoring",
+        "document_learning"
+      ],
+      "path": "palantir-functions/"
+    },
+    "transforms": {
+      "transforms": [
+        "snowflake_ingestion",
+        "kpi_calculations"
+      ],
+      "path": "palantir-transforms/"
+    }
+  },
+  "deployment_time": "2025-06-25 12:21:33"
+}

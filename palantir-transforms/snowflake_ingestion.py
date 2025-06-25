@@ -84,7 +84,7 @@ class SnowflakeIngestion(Transform):
                 max_speed,
                 distance_miles,
                 temperature_celsius
-            FROM deliveries
+            FROM MCLEOD_DB.dbo.deliveries
             WHERE date_trunc('day', scheduled_time) >= current_date - 7
         """)
         
@@ -101,7 +101,7 @@ class SnowflakeIngestion(Transform):
                 active,
                 total_deliveries,
                 on_time_rate
-            FROM drivers
+            FROM MCLEOD_DB.dbo.drivers
             WHERE active = TRUE
         """)
         
@@ -116,7 +116,7 @@ class SnowflakeIngestion(Transform):
                 fuel_efficiency,
                 temperature_system_status,
                 max_speed_governor_active
-            FROM vehicles
+            FROM MCLEOD_DB.dbo.vehicles
             WHERE status != 'retired'
         """)
         
@@ -131,7 +131,7 @@ class SnowflakeIngestion(Transform):
                 actual_time_minutes,
                 max_speed_recorded,
                 safety_incidents
-            FROM routes
+            FROM MCLEOD_DB.dbo.routes
             WHERE date_trunc('day', created_at) >= current_date - 7
         """)
         

@@ -1,0 +1,68 @@
+# 🚀 PALANTIR FOUNDRY DEPLOYMENT - STEP BY STEP
+
+## I've prepared everything for deployment! Here's what to do:
+
+### 1️⃣ VS Code is now open with your project
+
+### 2️⃣ Press `Cmd + Shift + P` to open Command Palette
+
+### 3️⃣ Type and run these commands in order:
+
+#### A. Connect to Foundry
+```
+Palantir: Connect to Foundry
+```
+- Enter your Foundry credentials
+- Select workspace: `raider-express-raiderbot`
+
+#### B. Deploy Everything
+```
+Palantir: Deploy All
+```
+This will deploy:
+- ✅ 6 Ontology Objects (Driver, Vehicle, Delivery, Route, SafetyIncident, Customer)
+- ✅ 4 Functions (raiderbot_core, route_optimization, safety_scoring, document_learning)
+- ✅ 2 Transforms (snowflake_ingestion, kpi_calculations)
+
+#### C. Test RaiderBot
+```
+Palantir: Test Function
+```
+- Select: `raiderbot_core`
+- Use this test input:
+```json
+{
+  "message": "Hello RaiderBot!",
+  "language": "en"
+}
+```
+
+#### D. Check Deployment Status
+```
+Palantir: View Logs
+```
+
+---
+
+## 🐕 Expected Response from RaiderBot:
+```json
+{
+  "message": "🐕 Woof! I'm RaiderBot, built entirely on Palantir Foundry for Raider Express...",
+  "language": "en",
+  "timestamp": "2025-06-25T12:21:33Z",
+  "powered_by": "Palantir Foundry",
+  "data_source": "foundry_datasets"
+}
+```
+
+## 📊 After Deployment:
+1. Verify datasets are syncing from MCLEOD_DB.dbo
+2. Check transform schedules are active
+3. Test the bilingual feature with Spanish:
+   ```json
+   {"message": "¿Cómo están las entregas hoy?", "language": "es"}
+   ```
+
+---
+
+**🎯 Start with Step 2: Press `Cmd + Shift + P` now!**

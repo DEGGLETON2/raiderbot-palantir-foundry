@@ -1,0 +1,2 @@
+🐕 RAIDERBOT IS READY FOR DEPLOYMENT! 🚀
+VS Code is open. Press Cmd+Shift+P and run: 'Palantir: Connect to Foundry'

@@ -1,0 +1,7 @@
+// COPY AND PASTE THESE INTO VS CODE COMMAND PALETTE
+// Press Cmd+Shift+P, then paste each command
+
+Palantir: Connect to Foundry
+Palantir: Deploy All
+Palantir: Test Function
+Palantir: View Logs

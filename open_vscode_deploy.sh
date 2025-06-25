@@ -1,0 +1,40 @@
+#!/bin/bash
+# Open VS Code and display deployment instructions
+
+echo "🐕 Opening VS Code for RaiderBot Deployment..."
+echo "================================================"
+echo ""
+echo "I cannot directly deploy to Palantir Foundry because:"
+echo "1. ❌ No Foundry CLI is installed"
+echo "2. 🔒 The VS Code extension handles secure authentication"
+echo "3. 🔐 Foundry requires credentials entered through VS Code"
+echo ""
+echo "Opening VS Code now..."
+
+# Open VS Code in the project directory
+code /Users/daneggleton/raiderbot-palantir-foundry
+
+echo ""
+echo "📋 DEPLOYMENT STEPS (in VS Code):"
+echo "================================="
+echo ""
+echo "1️⃣  Connect to Foundry:"
+echo "   • Press: Cmd+Shift+P"
+echo "   • Type: 'Palantir: Connect to Foundry'"
+echo "   • Enter your credentials"
+echo "   • Select: 'raider-express-raiderbot' workspace"
+echo ""
+echo "2️⃣  Deploy Everything:"
+echo "   • Press: Cmd+Shift+P"
+echo "   • Type: 'Palantir: Deploy All'"
+echo "   • Wait for deployment to complete"
+echo ""
+echo "3️⃣  Test RaiderBot:"
+echo "   • Press: Cmd+Shift+P"
+echo "   • Type: 'Palantir: Test Function'"
+echo "   • Select: 'raiderbot_core'"
+echo "   • Test with: {\"message\": \"Hello!\", \"language\": \"en\"}"
+echo ""
+echo "📖 Full guide: QUICK_DEPLOY_GUIDE.md"
+echo ""
+echo "🐕 Woof! VS Code should be opening now..."
