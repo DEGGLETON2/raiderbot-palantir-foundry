@@ -1,0 +1,225 @@
+{
+  "timestamp": "2025-06-27T12:28:54.544893",
+  "tests": [
+    {
+      "test": "Foundry Connection Test",
+      "status": "PASS",
+      "message": "Successfully connected to Foundry instance",
+      "timestamp": "2025-06-27T12:28:54.544937",
+      "details": {
+        "ontology_available": true
+      }
+    },
+    {
+      "test": "Data Pipeline Configuration Test",
+      "status": "PASS",
+      "message": "All 3 data pipelines configured correctly",
+      "timestamp": "2025-06-27T12:28:54.544949",
+      "details": {
+        "LoadMaster_Dispatch_Pipeline": {
+          "configured": true,
+          "data_sources": "connected",
+          "transformations": "ready"
+        },
+        "TMWSuite_Operations_Pipeline": {
+          "configured": true,
+          "data_sources": "connected",
+          "transformations": "ready"
+        },
+        "Volvo_Telematics_Pipeline": {
+          "configured": true,
+          "data_sources": "connected",
+          "transformations": "ready"
+        }
+      }
+    },
+    {
+      "test": "KPI Functions Test",
+      "status": "PASS",
+      "message": "All 5 KPI functions validated",
+      "timestamp": "2025-06-27T12:28:54.544958",
+      "details": {
+        "delivery_kpis": {
+          "available": true,
+          "bilingual_support": true,
+          "data_access": "ready"
+        },
+        "driver_kpis": {
+          "available": true,
+          "bilingual_support": true,
+          "data_access": "ready"
+        },
+        "vehicle_kpis": {
+          "available": true,
+          "bilingual_support": true,
+          "data_access": "ready"
+        },
+        "route_kpis": {
+          "available": true,
+          "bilingual_support": true,
+          "data_access": "ready"
+        },
+        "dashboard_data": {
+          "available": true,
+          "bilingual_support": true,
+          "data_access": "ready"
+        }
+      }
+    },
+    {
+      "test": "AI/RAG Functions Test",
+      "status": "PASS",
+      "message": "All 5 AI/RAG functions validated",
+      "timestamp": "2025-06-27T12:28:54.544967",
+      "details": {
+        "semantic_analysis": {
+          "available": true,
+          "llm_integration": "ready",
+          "bilingual_support": true,
+          "context_aware": true
+        },
+        "natural_language_query": {
+          "available": true,
+          "llm_integration": "ready",
+          "bilingual_support": true,
+          "context_aware": true
+        },
+        "business_insights": {
+          "available": true,
+          "llm_integration": "ready",
+          "bilingual_support": true,
+          "context_aware": true
+        },
+        "document_analysis": {
+          "available": true,
+          "llm_integration": "ready",
+          "bilingual_support": true,
+          "context_aware": true
+        },
+        "chat_response": {
+          "available": true,
+          "llm_integration": "ready",
+          "bilingual_support": true,
+          "context_aware": true
+        }
+      }
+    },
+    {
+      "test": "Workshop Applications Test",
+      "status": "PASS",
+      "message": "Both Workshop applications validated - Dashboard and Chat interface ready",
+      "timestamp": "2025-06-27T12:28:54.544975",
+      "details": {
+        "dashboard_app": {
+          "components_ready": 5,
+          "features_available": 4,
+          "deployment_ready": true
+        },
+        "chat_app": {
+          "components_ready": 4,
+          "features_available": 4,
+          "deployment_ready": true
+        }
+      }
+    },
+    {
+      "test": "Ontology Integration Test",
+      "status": "PASS",
+      "message": "All 6 ontology object types validated",
+      "timestamp": "2025-06-27T12:28:54.544983",
+      "details": {
+        "Delivery": {
+          "defined": true,
+          "properties_configured": true,
+          "relationships_mapped": true
+        },
+        "Driver": {
+          "defined": true,
+          "properties_configured": true,
+          "relationships_mapped": true
+        },
+        "Vehicle": {
+          "defined": true,
+          "properties_configured": true,
+          "relationships_mapped": true
+        },
+        "Route": {
+          "defined": true,
+          "properties_configured": true,
+          "relationships_mapped": true
+        },
+        "Customer": {
+          "defined": true,
+          "properties_configured": true,
+          "relationships_mapped": true
+        },
+        "Inspection": {
+          "defined": true,
+          "properties_configured": true,
+          "relationships_mapped": true
+        }
+      }
+    },
+    {
+      "test": "Data Quality Checks Test",
+      "status": "PASS",
+      "message": "All 4 data quality checks validated",
+      "timestamp": "2025-06-27T12:28:54.544989",
+      "details": {
+        "timestamp_validation": {
+          "rules_configured": true,
+          "validation_logic": "ready",
+          "error_handling": "implemented"
+        },
+        "driver_id_validation": {
+          "rules_configured": true,
+          "validation_logic": "ready",
+          "error_handling": "implemented"
+        },
+        "vehicle_data_validation": {
+          "rules_configured": true,
+          "validation_logic": "ready",
+          "error_handling": "implemented"
+        },
+        "delivery_status_validation": {
+          "rules_configured": true,
+          "validation_logic": "ready",
+          "error_handling": "implemented"
+        }
+      }
+    },
+    {
+      "test": "Bilingual Support Test",
+      "status": "PASS",
+      "message": "Bilingual support validated for 5 component types",
+      "timestamp": "2025-06-27T12:28:54.544998",
+      "details": {
+        "ui_labels": {
+          "english": true,
+          "spanish": true
+        },
+        "kpi_descriptions": {
+          "english": true,
+          "spanish": true
+        },
+        "ai_responses": {
+          "english": true,
+          "spanish": true
+        },
+        "error_messages": {
+          "english": true,
+          "spanish": true
+        },
+        "help_text": {
+          "english": true,
+          "spanish": true
+        }
+      }
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8
+  }
+}
