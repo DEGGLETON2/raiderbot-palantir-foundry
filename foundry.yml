@@ -2,22 +2,22 @@ functions:
   python:
     functions:
     - function: process_user_query
-      module: functions.raiderbot_ai_functions
+      module: python_functions.raiderbot_ai_functions
     - function: generate_ai_insights
-      module: functions.raiderbot_ai_functions
+      module: python_functions.raiderbot_ai_functions
     - function: analyze_logistics_performance
-      module: functions.raiderbot_kpi_functions
+      module: python_functions.raiderbot_kpi_functions
     - function: generate_kpi_insights
-      module: functions.raiderbot_kpi_functions
+      module: python_functions.raiderbot_kpi_functions
     - function: analyze_logistics_data
-      module: functions.raiderbot_logistics_analyzer
+      module: python_functions.raiderbot_logistics_analyzer
     - function: generate_insights
-      module: functions.raiderbot_logistics_analyzer
+      module: python_functions.raiderbot_logistics_analyzer
     - function: optimize_routes
-      module: functions.route_optimization
+      module: python_functions.route_optimization
     - function: calculate_efficiency
-      module: functions.route_optimization
+      module: python_functions.route_optimization
     - function: calculate_safety_score
-      module: functions.safety_scoring
+      module: python_functions.safety_scoring
     - function: analyze_incidents
-      module: functions.safety_scoring
+      module: python_functions.safety_scoring
