@@ -14,12 +14,14 @@
     },
     "functions": {
       "functions": [
+        "raiderbot_test",
+        "cascade_verification",
         "raiderbot_core",
         "route_optimization",
         "safety_scoring",
         "document_learning"
       ],
-      "path": "palantir-functions/"
+      "path": "python-functions/python/python-functions/"
     },
     "transforms": {
       "transforms": [
