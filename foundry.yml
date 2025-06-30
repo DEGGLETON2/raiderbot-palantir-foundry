@@ -32,6 +32,18 @@ datasets:
 
 # Function configuration
 functions:
+  raiderbot_test:
+    type: foundry_function
+    path: python-functions/python/python-functions/raiderbot_test.py
+    memory: 1024
+    timeout: 60
+    
+  cascade_verification:
+    type: foundry_function
+    path: python-functions/python/python-functions/raiderbot_test.py
+    memory: 1024
+    timeout: 60
+    
   raiderbot_core:
     type: foundry_function
     path: palantir-functions/raiderbot_core.py
