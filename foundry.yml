@@ -40,7 +40,7 @@ functions:
     
   cascade_verification:
     type: foundry_function
-    path: python-functions/python/python-functions/raiderbot_test.py
+    path: python-functions/python/python-functions/cascade_verification.py
     memory: 1024
     timeout: 60
     
