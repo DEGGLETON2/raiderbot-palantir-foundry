@@ -21,3 +21,9 @@ functions:
       module: python_functions.safety_scoring
     - function: analyze_incidents
       module: python_functions.safety_scoring
+    - function: raiderbot_email_monitoring_pipeline
+      module: python_functions.raiderbot_email_pipeline
+    - function: raiderbot_email_sentiment_analysis
+      module: python_functions.raiderbot_email_pipeline
+    - function: raiderbot_email_response_generator
+      module: python_functions.raiderbot_email_pipeline
