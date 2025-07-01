@@ -9,8 +9,8 @@ import json
 from datetime import datetime
 
 @sidecar(
-    image="raiderbot-email-intelligence-api",  # Will be updated with full registry path
-    tag="latest",  # Will be updated with specific tag
+    image="baryte-container-registry.palantirfoundry.com/raiderbot-email-pipeline-container",
+    tag="v1.0",
     volumes=[Volume("shared")]
 )
 @transform(
@@ -101,8 +101,8 @@ def raiderbot_email_container_transform(output):
 
 # Alternative: Simpler container transform for testing
 @sidecar(
-    image="raiderbot-email-intelligence-api",
-    tag="latest", 
+    image="baryte-container-registry.palantirfoundry.com/raiderbot-email-pipeline-container",
+    tag="v1.0",
     volumes=[Volume("shared")]
 )
 @transform(
