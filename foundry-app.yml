@@ -1,0 +1,70 @@
+# Foundry Application Configuration
+# Containerized deployment bypassing broken function registration
+
+apiVersion: foundry/v1
+kind: Application
+metadata:
+  name: raiderbot-email-intelligence-api
+  description: "RaiderBot Email Intelligence API - Containerized deployment bypassing broken function registration"
+
+spec:
+  # Use containerized deployment instead of function registration
+  deployment:
+    type: container
+    
+  # Container configuration
+  container:
+    image: raiderbot-email-api
+    port: 8080
+    
+  # Environment variables
+  environment:
+    - name: PYTHONPATH
+      value: "/app:/app/python-functions/python/python-functions"
+    - name: PORT
+      value: "8080"
+    - name: FLASK_ENV
+      value: "production"
+      
+  # Resource requirements
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi" 
+      cpu: "500m"
+      
+  # Health checks
+  healthCheck:
+    httpGet:
+      path: /health
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    
+  # Expose service
+  service:
+    type: ClusterIP
+    ports:
+      - name: http
+        port: 8080
+        targetPort: 8080
+        
+  # API endpoints documentation
+  endpoints:
+    - path: /health
+      method: GET
+      description: "Health check endpoint"
+    - path: /api/email-monitoring
+      method: POST
+      description: "Email monitoring pipeline"
+    - path: /api/sentiment-analysis
+      method: POST  
+      description: "Email sentiment analysis"
+    - path: /api/response-generation
+      method: POST
+      description: "Automated response generation"
+    - path: /api/full-pipeline
+      method: POST
+      description: "Complete end-to-end pipeline"
