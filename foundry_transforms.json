@@ -1,0 +1,16 @@
+{
+  "transforms": {
+    "raiderbot_email_container_transform": {
+      "type": "container",
+      "image": "baryte-container-registry.palantirfoundry.com/raiderbot-email-pipeline-container:v1.0",
+      "output_dataset": "ri.foundry.main.dataset.email_pipeline_results",
+      "description": "RaiderBot email intelligence pipeline container transform"
+    },
+    "raiderbot_container_test_transform": {
+      "type": "container",
+      "image": "baryte-container-registry.palantirfoundry.com/raiderbot-email-pipeline-container:v1.0",
+      "output_dataset": "ri.foundry.main.dataset.email_pipeline_test",
+      "description": "RaiderBot container transform test"
+    }
+  }
+}
